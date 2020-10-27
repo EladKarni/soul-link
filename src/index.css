@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.fire {
+  background: red;
+}
+.water {
+  background: #39f;
+}
+.normal {
+  background: gray;
+}
+.ghost {
+  background: #66b;
+}
+.rock {
+  background: #ba6;
+}
+.flying {
+  background: #89f;
+}
+.electric {
+  background: #fc3;
+}
+.grass {
+  background: #7c5;
+}
+.ice {
+  background: #6cf;
+}
+.fighting {
+  background: #b54;
+}
+.poison {
+  background: #a59;
+}
+.ground {
+  background: #db5;
+}
+.psychic {
+  background: #f59;
+}
+.bug {
+  background: #ab2;
+}
+.dragon {
+  background: #76e;
+}
+.dark {
+  background: #754;
+}
+.steel {
+  background: #aab;
+}
+.fairy {
+  background: #e9e;
+}

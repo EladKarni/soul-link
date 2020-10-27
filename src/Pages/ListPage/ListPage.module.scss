@@ -1,0 +1,39 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../media/poke-bg.jpg');
+    background-repeat: round;
+    z-index: 1;
+    &:before {
+        content: "";
+        position: fixed;
+        background-color: #230725b9;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+    }
+    .listPage {
+        background-color: transparent;
+    }
+    .pokeList {
+
+        button {
+            transform: translateY(-5px);
+            min-width: 100%;
+            background-color: #543956;
+            border: none;
+            color: #d5d0d6;
+            font-weight: bolder;
+            z-index: 1;
+            &:hover {
+                color: #d5d0d6;
+                background-color: #570d57;
+                transition: all 0.5s ease-in-out;
+            }
+            
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+}

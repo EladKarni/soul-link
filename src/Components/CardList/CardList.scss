@@ -1,0 +1,9 @@
+.card-group {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+    .unlick {
+        position: relative;
+        bottom: 0;
+    }
+}

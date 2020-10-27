@@ -1,0 +1,183 @@
+.parallaxEffect {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  transform-style: preserve-3d;
+
+  .card {
+    background: linear-gradient(to right, rgb(133, 85, 126), rgb(70, 117, 163));
+    width: 25em;
+    height: 40em;
+    padding: 0.5em 2rem 0 2rem;
+    margin: 0 2em;
+    border-radius: 15px;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: white 7px solid;
+    
+    transform-style: preserve-3d;
+
+    &:hover {
+     .unlink, .typeTag{
+        transform: translateZ(40px);
+      }
+      .sprite img {
+        &:first-of-type { 
+          animation: shake 1s;
+          animation-fill-mode: forwards;
+        }
+        &:nth-of-type(2) { 
+          animation: shake 1s;
+          animation-delay: 0.1s;
+          animation-fill-mode: forwards;
+        }
+
+      }
+    }
+    
+    .title {
+      text-align: center;
+      height: 24px;
+      transition: all 0.5s ease-out;
+    }
+
+    .sprite {
+      min-height: 35vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .circle {
+        width: 12rem;
+        height: 12rem;
+        background: rgb(245, 239, 214);
+        position: absolute;
+        border-radius: 50%;
+        z-index: 1;
+        transform: translateX(-50px);
+        &:before {
+          content: "";
+          width: 6rem;
+          height: 12rem;
+          background: rgb(245, 239, 214);
+          position: absolute;
+          z-index: 1;
+          transform: translateX(100px);
+        }
+        &:after {
+          content: "";
+          width: 12rem;
+          height: 12rem;
+          background: rgb(245, 239, 214);
+          position: inherit;
+          border-radius: 50%;
+          z-index: 1;
+          transform: translateX(100px);
+        }
+      }
+
+      img {
+        width: 10rem;
+        z-index: 2;
+        transition: all 0.75s ease-out;
+        animation-fill-mode: forwards;
+      }
+    }
+    .infoGroup{
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      min-width: 100%;
+      .info {
+        flex: 1;
+        &:first-child {
+          margin-right: 20px;
+        }
+        .nickname {
+          font-size: 2em;
+          &:focus{
+            max-width: 100px;
+          }
+
+          .editableLabel input {
+            color: red;
+          }
+
+        }
+        .name {
+          font-size: 1.25em;
+          margin-bottom: 1em;
+        }
+      }
+    }
+    .types {
+      display: flex;
+      transition: all 0.75s ease-out;
+        .typeTag {
+          display: inline-block;
+          border-radius: 5px;
+          padding: 2px 12px;
+          margin: 3px;
+          color: white;
+          box-shadow: 6px 8px 9px 1px rgba(0, 0, 0, 0.3);
+          transition: all 0.75s ease-out;
+        }
+        
+    }
+    .unlink {
+      margin-top: 2rem;
+      transition: all 0.5s ease-out;
+      button {
+        width: 100%;
+        padding: 1rem 0rem;
+        background: #f54642;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 30px;
+        font-weight: bolder;
+      }
+    } 
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateZ(10px) translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translateZ(20px) translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translateZ(30px) translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translateZ(40px) translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translateZ(50px) translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translateZ(60px) translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translateZ(70px) translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translateZ(80px) translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translateZ(90px) translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translateZ(100px) translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translateZ(90px) translate(1px, -2px) rotate(-1deg);
+  }
+}

@@ -1,0 +1,53 @@
+.menuPage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-image: url('../../media/poke-bg.jpg');
+    background-repeat: round;
+    z-index: 1;
+    &:after {
+        content: "";
+        position: fixed;
+        background-color: #230725b9;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+    }
+    .actionArea {
+        background-color: #5b788f;
+        padding: 1em;
+        border-radius: 10px;
+        margin: auto;
+        z-index: 3;
+        min-width: 300px;
+        box-shadow: 16px 21px 18px 3px rgba(0,0,0,0.5);
+
+        label {
+            font-weight: bolder;
+        }
+
+        button {
+            min-width: 100%;
+            background-color: #543956;
+            border: none;
+            color: #d5d0d6;
+            font-weight: bolder;
+
+            &:hover {
+                color: #d5d0d6;
+                background-color: #570d57;
+                transition: all 0.5s ease-in-out;
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        span {
+            color: rgba(136, 17, 17, 0.863);
+            font-size: large;
+            font-weight: bolder;
+        }
+    }
+}
