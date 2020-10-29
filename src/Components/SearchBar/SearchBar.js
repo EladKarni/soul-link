@@ -37,7 +37,7 @@ const SearchBar = props => {
 		}
 		getPokemonAPI()
     }, [])
-
+    console.log(data)
   return (
     <div className={styles.searchBar} id={styles.search}>
       <Typeahead className={styles.typeahead} {...typeaheadProps} />
