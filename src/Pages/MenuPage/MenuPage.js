@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
 
 import styles from './MenuPage.module.scss';
@@ -15,12 +15,15 @@ function MenuPage() {
         <div className={styles.menuPage}>
             <div className={styles.actionArea}>
                 <Form className={styles.form}>
-                    <Form.Group controlId="slcode">
-                        <Form.Label>Soul-Link Code</Form.Label>
-                        <Form.Control value={sCode} onChange={(e) => setSCode(e.target.value)} type="text" placeholder="SL-423f2gf7" />
-                        <span>{err}</span>
-                    </Form.Group>
-
+                    <Form.Label>Soul-Link Code</Form.Label>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon3">
+                            {`SL-`}
+                        </InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control id="basic-url" aria-describedby="basic-addon3" />
+                    </InputGroup>
                     <Button onClick={handleClick}>Join</Button>
                 </Form>
             </div>
