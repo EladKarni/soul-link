@@ -6,7 +6,7 @@ import styles from './PokeCard.module.scss';
 
 const PokeCard = (props) => {
   const { pair, unlinked } = props;
-
+  console.log(pair.pokemon);
   return (
     <Tilt
       className={styles.parallaxEffect}
@@ -25,6 +25,7 @@ const PokeCard = (props) => {
           <div className={styles.circle} />
           {pair.pokemon.map(({ sprites }) => (
             <img
+              key={sprites.front_default}
               src={sprites.front_default}
               alt="pokemon-sprite"
             />
@@ -32,7 +33,7 @@ const PokeCard = (props) => {
         </div>
         <div className={styles.infoGroup}>
           {pair.pokemon.map(({ name, types }, index) => (
-            <div className={styles.info}>
+            <div className={styles.info} key={name}>
               <h1 className={styles.nickname}>
                 nickname
               </h1>

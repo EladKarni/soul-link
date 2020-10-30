@@ -1,25 +1,26 @@
-import React from "react";
-import PokeCard from "../Card/PokeCard";
-import CardGroup from "react-bootstrap/CardGroup";
+import React from 'react';
+import CardGroup from 'react-bootstrap/CardGroup';
+import PropTypes from 'prop-types';
+import PokeCard from '../Card/PokeCard';
 
-import "./CardList.scss";
+import './CardList.scss';
 
-const CardList = props => {
-  return (
-    <CardGroup className="card-group">
-      {props.list.map((pair, index) => {
-        return (
-            <PokeCard
-              change={props.onChange}
-              i={index}
-              pair={props.list[index]}
-              unlinked={props.unlink}
-              key={pair.id}
-            />
-        );
-      })}
-    </CardGroup>
-  );
+const CardList = ({ list, unlink }) => (
+  <CardGroup className="card-group">
+    {list.map((pair, index) => (
+      <PokeCard
+        i={index}
+        pair={list[index]}
+        unlinked={unlink}
+        key={pair.id}
+      />
+    ))}
+  </CardGroup>
+);
+
+CardList.propTypes = {
+  list: PropTypes.array.isRequired,
+  unlink: PropTypes.func.isRequired,
 };
 
 export default CardList;
