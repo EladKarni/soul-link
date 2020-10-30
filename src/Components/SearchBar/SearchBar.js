@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/Button";
+import Button from 'react-bootstrap/Button';
 // import InputGroup from 'react-bootstrap/InputGroup';
-import { Typeahead } from "react-bootstrap-typeahead"; // ES2015
-import "react-bootstrap-typeahead/css/Typeahead.css";
+import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import PropTypes from 'prop-types';
 
-import styles from "./SearchBar.module.scss";
+import styles from './SearchBar.module.scss';
 
-const SearchBar = props => {
-  let typeaheadRef = React.useRef(null);
+const SearchBar = ({ change, selected, submit }) => {
+  const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
-   
+
   const typeaheadProps = {
-    onChange: selected => {
-      props.change(selected);
+    onChange: (selectedPoke) => {
+      change(selectedPoke);
     },
-    id: "autoComplete",
+    id: 'autoComplete',
     clearButton: true,
-    labelKey: "name",
+    labelKey: 'name',
     multiple: true,
     minLength: 3,
-    bsSize: "large",
+    bsSize: 'large',
     ref: typeaheadRef,
-    placeholder: "Choose Your Pokémon...",
-    style: { borderRadius: "10px 0 0 10px" },
-    options: data
+    placeholder: 'Choose Your Pokémon...',
+    style: { borderRadius: '10px 0 0 10px' },
+    options: data,
   };
 
   useEffect(() => {
-		const getPokemonAPI = async () => {
-			const response = await fetch(
-				'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=1000'
-			)
-			const json = await response.json()
-			setData(json.results)
-		}
-		getPokemonAPI()
-    }, [])
-    console.log(data)
+    const getPokemonAPI = async () => {
+      const response = await fetch(
+        'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=1000',
+      );
+      const json = await response.json();
+      setData(json.results);
+    };
+    getPokemonAPI();
+  }, []);
   return (
     <div className={styles.searchBar} id={styles.search}>
       <Typeahead className={styles.typeahead} {...typeaheadProps} />
       <Button
         className={styles.btn_OutlineSecondary}
-        disabled={props.selected.length !== 2}
+        disabled={selected.length !== 2}
         onClick={() => {
-          props.submit();
+          submit();
           typeaheadRef.current.clear();
         }}
       >
@@ -53,6 +53,12 @@ const SearchBar = props => {
       </Button>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  change: PropTypes.func.isRequired,
+  selected: PropTypes.array.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
