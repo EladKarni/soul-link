@@ -9,7 +9,7 @@ function MenuPage() {
   const [err, setErr] = useState('');
 
   const history = useHistory();
-  const handleClick = () => (sCode.length > 0 ? history.push(`/SL-${sCode}`) : setErr('Please Add A Code'));
+  const handleClick = () => (sCode.length > 0 ? history.push(`/SL-${sCode}`) : setErr('Please add a code'));
 
   return (
     <div className={styles.menuPage}>
@@ -23,8 +23,10 @@ function MenuPage() {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <Form.Control onChange={(e) => setSCode(e.target.value)} type="text" placeholder="423f2gf7" />
-            <span>{err}</span>
           </InputGroup>
+          <Form.Label className={styles.errorLabel}>
+            {err}
+          </Form.Label>
           <Button onClick={handleClick}>Join</Button>
         </Form>
       </div>
