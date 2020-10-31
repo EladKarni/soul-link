@@ -6,7 +6,6 @@ import styles from './PokeCard.module.scss';
 
 const PokeCard = (props) => {
   const { pair, unlinked } = props;
-  console.log(pair.pokemon);
   return (
     <Tilt
       className={styles.parallaxEffect}
@@ -42,7 +41,6 @@ const PokeCard = (props) => {
                 {types.map(({ type: { name: Poketype } }) => (
                   <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
                     {Poketype}
-                    {console.log(Poketype)}
                   </span>
                 ))}
               </div>
