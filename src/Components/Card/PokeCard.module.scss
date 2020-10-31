@@ -22,7 +22,7 @@
     transform-style: preserve-3d;
 
     &:hover {
-     .unlink, .typeTag{
+      .typeTag{
         transform: translateZ(40px);
       }
       .sprite img {

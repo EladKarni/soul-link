@@ -32,17 +32,17 @@ const PokeCard = (props) => {
           ))}
         </div>
         <div className={styles.infoGroup}>
-          {pair.pokemon.map(({ name, types }, index) => (
-            <div className={styles.info} key={name}>
+          {pair.pokemon.map(({ name: pokemon, types }) => (
+            <div className={styles.info} key={pokemon}>
               <h1 className={styles.nickname}>
                 nickname
               </h1>
-              {console.log(index)}
-              <div className={styles.name}>{name}</div>
+              <div className={styles.name}>{pokemon}</div>
               <div className={styles.types}>
-                {types.map(({ type: { name: { pokemon } } }) => (
-                  <span className={[`${styles.typeTag}`, pokemon].join(' ')} key={pokemon}>
-                    {pokemon}
+                {types.map(({ type: { name: Poketype } }) => (
+                  <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
+                    {Poketype}
+                    {console.log(Poketype)}
                   </span>
                 ))}
               </div>
