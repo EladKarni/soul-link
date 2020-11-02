@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.5.3",
     "firebase": "^7.24.0",
+    "firebase-tools": "^8.14.1",
     "node-sass": "^4.14.1",
     "pokeapi-js-wrapper": "^1.1.2",
     "prop-types": "^15.7.2",
