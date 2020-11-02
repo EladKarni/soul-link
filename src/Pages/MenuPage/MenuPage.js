@@ -14,7 +14,7 @@ function MenuPage() {
   return (
     <div className={styles.menuPage}>
       <div className={styles.actionArea}>
-        <Form className={styles.form}>
+        <Form className={styles.form} onSubmit={handleClick}>
           <Form.Label>Soul-Link Code</Form.Label>
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
@@ -27,7 +27,7 @@ function MenuPage() {
           <Form.Label className={styles.errorLabel}>
             {err}
           </Form.Label>
-          <Button onClick={handleClick}>Join</Button>
+          <Button type="submit" onClick={handleClick}>Join</Button>
         </Form>
       </div>
     </div>
