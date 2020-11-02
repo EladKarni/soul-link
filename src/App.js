@@ -7,6 +7,8 @@ import {
 import ListPage from './Pages/ListPage/ListPage';
 import MenuPage from './Pages/MenuPage/MenuPage';
 
+import './App.scss';
+
 const App = () => (
   <Router>
     <Switch>
