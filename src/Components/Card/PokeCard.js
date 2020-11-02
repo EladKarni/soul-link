@@ -69,7 +69,7 @@ const PokeCard = (props) => {
 
       <div className={styles.card}>
         <div className={styles.title}>
-          {title.length > 0
+          {title?.length > 0
             ? (
               <Editable
                 text={title}
