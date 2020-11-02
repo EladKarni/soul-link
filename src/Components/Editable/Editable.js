@@ -1,5 +1,5 @@
 // Editable.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const Editable = ({
@@ -18,8 +18,11 @@ const Editable = ({
 
   const onLabelClicked = () => {
     setEditing(true);
-    inputEl.current.focus();
   };
+
+  useEffect(() => {
+    if (isEditing) inputEl.current.focus();
+  }, [isEditing]);
 
   return (
     <section {...props}>
