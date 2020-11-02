@@ -9,8 +9,8 @@ const CardList = ({ list, unlink }) => (
   <CardGroup className="card-group">
     {list.map((pair, index) => (
       <PokeCard
-        i={index}
-        pair={list[index]}
+        iCard={index}
+        card={list[index]}
         unlinked={unlink}
         key={pair.id}
       />
