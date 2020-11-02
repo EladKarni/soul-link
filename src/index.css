@@ -14,12 +14,14 @@ code {
 
 .fire {
   background: red;
+  color: rgb(245, 239, 214);
 }
 .water {
   background: #39f;
 }
 .normal {
   background: gray;
+  color: black;
 }
 .ghost {
   background: #66b;
