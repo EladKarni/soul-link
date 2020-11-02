@@ -1,5 +1,5 @@
 // Editable.js
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const Editable = ({
@@ -14,6 +14,12 @@ const Editable = ({
   ...props
 }) => {
   const [isEditing, setEditing] = useState(false);
+  const inputEl = useRef(null);
+
+  const onLabelClicked = () => {
+    setEditing(true);
+    inputEl.current.focus();
+  };
 
   return (
     <section {...props}>
@@ -26,6 +32,7 @@ const Editable = ({
           // onKeyDown={(e) => handleKeyDown(e, type)}
         >
           <input
+            ref={inputEl}
             type="text"
             name="title"
             value={text}
@@ -44,7 +51,7 @@ const Editable = ({
         <div
           role="textbox"
           aria-hidden="true"
-          onClick={() => setEditing(true)}
+          onClick={onLabelClicked}
         >
           <span>
             {text || 'Editable content'}
