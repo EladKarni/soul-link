@@ -4857,6 +4857,13 @@ eslint-config-airbnb@18.2.0:
     object.assign "^4.1.0"
     object.entries "^1.1.2"
 
+eslint-config-react-app@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-5.2.1.tgz#698bf7aeee27f0cea0139eaef261c7bf7dd623df"
+  integrity sha512-pGIZ8t0mFLcV+6ZirRgYK6RVqUIKRIi9MmgzUEmrIknsn3AdO0I32asO86dJgloHq+9ZPl8UIg8mYrvgP5u2wQ==
+  dependencies:
+    confusing-browser-globals "^1.0.9"
+
 eslint-config-react-app@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-6.0.0.tgz#ccff9fc8e36b322902844cbd79197982be355a0e"
@@ -10055,6 +10062,16 @@ react-dom@^17.0.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.1"
+
+react-edit-inline2@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-edit-inline2/-/react-edit-inline2-1.0.2.tgz#db5c2204f03bd57fe1bd791184e46a2d87e63e55"
+  integrity sha512-5+sFBpfoHNf8tj988mbtLJhZUtH9brIHO5mNGyshW95wVmPGvnzoOuLuK2hG+v15o6uKe5aEKS6j+cmj/zwDbw==
+
+react-edit-inline@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-edit-inline/-/react-edit-inline-1.0.8.tgz#d144670b5217b5adc6c5bcb6976fc6b257f09b72"
+  integrity sha1-0URnC1IXta3Gxby2l2/Gslfwm3I=
 
 react-editable-label@^1.3.1:
   version "1.3.1"
