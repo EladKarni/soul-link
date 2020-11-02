@@ -9,12 +9,23 @@ function MenuPage() {
   const [err, setErr] = useState('');
 
   const history = useHistory();
-  const handleClick = () => (sCode.length > 0 ? history.push(`/SL-${sCode}`) : setErr('Please add a code'));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (sCode.length > 0) {
+      if (sCode.toLowerCase().search(/sl-/) === 0) {
+        history.push(`/SL-${sCode.slice(3)}`);
+      } else {
+        history.push(`/SL-${sCode}`);
+      }
+    } else {
+      setErr('Please add a code');
+    }
+  };
 
   return (
     <div className={styles.menuPage}>
       <div className={styles.actionArea}>
-        <Form className={styles.form} onSubmit={handleClick}>
+        <Form className={styles.form} onSubmit={handleSubmit}>
           <Form.Label>Soul-Link Code</Form.Label>
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
@@ -27,7 +38,7 @@ function MenuPage() {
           <Form.Label className={styles.errorLabel}>
             {err}
           </Form.Label>
-          <Button type="submit" onClick={handleClick}>Join</Button>
+          <Button type="submit" onClick={handleSubmit}>Join</Button>
         </Form>
       </div>
     </div>
