@@ -111,10 +111,15 @@
           font-size: 1.5em;
           color: rgb(245, 239, 214);
           cursor: pointer;
+          input {
+            width: 100%;
+            font-size: 0.5em;
+          }
         }
         .name {
           font-size: 1.25em;
           margin-bottom: 1em;
+          text-transform: capitalize;
         }
         .types {
           display: grid;
