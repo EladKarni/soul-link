@@ -34,7 +34,7 @@ function ListPage() {
       }),
     );
 
-    firebase.firestore().collection(listID).add({ pokemon: pokeInfo, id: '' }).then((docRef) => {
+    firebase.firestore().collection(listID).add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' }).then((docRef) => {
       const { id } = docRef;
       setMasterlist([
         ...masterlist,
