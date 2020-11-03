@@ -18,10 +18,9 @@ function ListPage() {
 
   const { getPokemonByName } = new Pokedex();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     const pokeInfo = await Promise.all(
-      selected.map(async ({ name: pokemonName }, index) => {
-        console.log(index, event);
+      selected.map(async ({ name: pokemonName }) => {
         const { name, types, sprites } = await getPokemonByName(
           pokemonName,
         );
@@ -62,7 +61,6 @@ function ListPage() {
   };
 
   const handleUnLinking = (id) => {
-    console.log(id);
     const newMasterList = masterlist.filter((pair) => pair.id !== id);
     const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
     setMasterlist([...newMasterList]);
@@ -93,7 +91,6 @@ function ListPage() {
             isMatch = true;
           }
 
-          console.log(nickname.toLowerCase(), trimmedValue);
           if (!isMatch && nickname.toLowerCase().indexOf(trimmedValue) > -1) {
             isMatch = true;
           }
