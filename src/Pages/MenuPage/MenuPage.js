@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-
+import firebase from 'firebase';
 import styles from './MenuPage.module.scss';
 
 function MenuPage() {
@@ -21,6 +21,12 @@ function MenuPage() {
       setErr('Please add a code');
     }
   };
+  const handleCreate = () => {
+    const generateCode = firebase.functions().httpsCallable('generateCode');
+    generateCode().then((result) => {
+      console.log(result);
+    });
+  };
 
   return (
     <div className={styles.menuPage}>
@@ -39,6 +45,7 @@ function MenuPage() {
             {err}
           </Form.Label>
           <Button type="submit" onClick={handleSubmit}>Join</Button>
+          <Button type="button" onClick={handleCreate}>Join</Button>
         </Form>
       </div>
     </div>

@@ -34,6 +34,7 @@ const SearchBar = ({ change, selected, submit }) => {
         'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=1000',
       );
       const json = await response.json();
+      console.log(json.results[0]);
       setData(json.results);
     };
     getPokemonAPI();
