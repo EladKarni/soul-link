@@ -34,8 +34,10 @@ function MenuPage() {
     }
   };
   const handleCreate = () => {
+    setLoading(true);
     const generateCode = firebase.functions().httpsCallable('generateCode');
     generateCode().then((result) => {
+      setLoading(false);
       history.push(`/SL-${result.data}`);
     });
   };
