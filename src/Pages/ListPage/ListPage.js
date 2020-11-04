@@ -53,13 +53,8 @@ function ListPage() {
           .update({
             id,
           })
-          .then(() => {
-            console.log('Document successfully updated!');
-          })
-          .catch((error) => {
-          // The document probably doesn't exist.
-            console.error('Error updating document: ', error);
-          });
+          .then(() => 'Success')
+          .catch((error) => error);
         setSelected([]);
       });
   };
@@ -69,7 +64,6 @@ function ListPage() {
   };
 
   const handleUnLinking = (id) => {
-    console.log(id);
     const newMasterList = masterlist.filter((pair) => pair.id !== id);
     const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
 
@@ -79,12 +73,8 @@ function ListPage() {
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
       .doc(id)
       .delete()
-      .then(() => {
-        console.log('Document successfully deleted!');
-      })
-      .catch((error) => {
-        console.error('Error removing document: ', error);
-      });
+      .then(() => 'Document successfully deleted!')
+      .catch((error) => error);
   };
 
   const handleFilterList = (event) => {
