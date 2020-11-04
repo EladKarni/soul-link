@@ -13,13 +13,13 @@ function MenuPage() {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    let newCode = sCode;
+    let newCode = sCode.toLowerCase();
     const doesListExist = firebase.functions().httpsCallable('doesListExist');
-    if (sCode.length > 0) {
-      if (sCode.toLowerCase().search(/sl-/) === 0) {
+    if (newCode.length > 0) {
+      if (newCode.search(/sl-/) === 0) {
         newCode = sCode.slice(3);
       }
-      doesListExist(`${newCode.toLowerCase()}`).then((result) => {
+      doesListExist(`${newCode}`).then((result) => {
         if (result.data) {
           setLoading(false);
           setErr('Please Check The Code');
