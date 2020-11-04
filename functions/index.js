@@ -13,7 +13,7 @@ exports.generateCode = functions.https.onCall(async (data, context) => {
         shuffled = shuffled.map((pokemon) => pokemon.name )
         // eslint-disable-next-line no-await-in-loop
         querySnap = await admin.firestore().collection(`SL-${shuffled.join('_')}`).limit(1).get()
-    } while (awaitquerySnap.empty)
+    } while (querySnap.empty)
     
     return shuffled.join('_')
     
