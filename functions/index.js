@@ -18,8 +18,35 @@ exports.generateCode = functions.https.onCall((data, context) => {
     
 }) 
 
+const randomInt = (max,min = 0) => Math.floor(Math.random() * (max - min)) + min
+const randomItem = arr => arr[randomInt(arr.length-1)]
+
+exports.createNewList = functions.https.onCall(async (data,context) => {
+  let exists = true
+  let names = []
+
+  while(exists) {
+    exists = false
+    const mons = new Set()
+    while (mons.size < 3) {
+      mons.add(randomItem(pokeList.results))
+    }
+    names = Array.from(mons, ({name}) => name)
+
+    // eslint-disable-next-line no-await-in-loop    
+    const docRef = await admin.firestore().collection('soul-list').doc(`SL-${names.join('_')}`).get()
+    exists = docRef.exists
+  }
+    // Crates a document (with verified unique code), and give is a createDate property
+    admin.firestore().collection('soul-list').doc(`SL-${names.join('_')}`).set({
+        creationDate: admin.firestore.Timestamp.fromDate(new Date()),
+    })
+    //Returns new generated code
+    return names.join('_')
+}) 
+
 exports.doesListExist = functions.https.onCall(async (data, context) => {
-    querySnap = await admin.firestore().collection(`SL-${data}`).limit(1).get()
-    console.log(`data was: ${data}, and result was ${querySnap.empty}`)
-    return querySnap.empty
+    docRef = await admin.firestore().collection('soul-list').doc(`SL-${data}`).get()
+    console.log(`data was: ${data}, and result was ${docRef.exists}`)
+    return docRef.exists
 })
