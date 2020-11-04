@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Pokedex } from 'pokeapi-js-wrapper';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import firebase from '../../Config/Firebase';
 import CardList from '../../Components/CardList/CardList';
 import SearchBar from '../../Components/SearchBar/SearchBar';
@@ -13,8 +13,10 @@ function ListPage() {
   const [selected, setSelected] = useState([]);
   const [masterlist, setMasterlist] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const { listID } = useParams();
+  const history = useHistory();
 
   const { getPokemonByName } = new Pokedex();
 
@@ -33,27 +35,33 @@ function ListPage() {
       }),
     );
 
-    firebase.firestore().collection(listID).add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' }).then((docRef) => {
-      const { id } = docRef;
-      setMasterlist([
-        ...masterlist,
-        {
-          pokemon: pokeInfo,
-          id,
-        },
-      ]);
-      firebase.firestore().collection(listID).doc(id).update({
-        id,
-      })
-        .then(() => {
-          console.log('Document successfully updated!');
-        })
-        .catch((error) => {
+    firebase.firestore().collection('soul-list')
+      .doc(listID).collection('linked-poke-list')
+      .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
+      .then((docRef) => {
+        const { id } = docRef;
+        setMasterlist([
+          ...masterlist,
+          {
+            pokemon: pokeInfo,
+            id,
+          },
+        ]);
+        firebase.firestore().collection('soul-list')
+          .doc(listID).collection('linked-poke-list')
+          .doc(id)
+          .update({
+            id,
+          })
+          .then(() => {
+            console.log('Document successfully updated!');
+          })
+          .catch((error) => {
           // The document probably doesn't exist.
-          console.error('Error updating document: ', error);
-        });
-      setSelected([]);
-    });
+            console.error('Error updating document: ', error);
+          });
+        setSelected([]);
+      });
   };
 
   const handleChange = (event) => {
@@ -61,12 +69,16 @@ function ListPage() {
   };
 
   const handleUnLinking = (id) => {
+    console.log(id);
     const newMasterList = masterlist.filter((pair) => pair.id !== id);
     const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
+
     setMasterlist([...newMasterList]);
     setFilteredList(newFilteredList);
 
-    firebase.firestore().collection(listID).doc(id).delete()
+    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+      .doc(id)
+      .delete()
       .then(() => {
         console.log('Document successfully deleted!');
       })
@@ -113,42 +125,63 @@ function ListPage() {
   };
 
   useEffect(() => {
+    const doesListExist = firebase.functions().httpsCallable('doesListExist');
+    doesListExist(`${listID.slice(3)}`).then((result) => {
+      if (result.data) {
+        setLoading(false);
+      } else {
+        history.push('/');
+      }
+    });
+
     const unlistener = firebase
       .firestore()
-      .collection(listID)
+      .collection('soul-list').doc(listID).collection('linked-poke-list')
       .onSnapshot((snap) => {
         const data = snap.docs.map((doc) => doc.data());
         setMasterlist(data);
       });
     return unlistener;
-  }, [listID]);
+  }, [listID, history]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.listPage}>
-        <Header
-          filterText={filter}
-          change={handleFilterList}
-          disabledInput={masterlist.length < 2}
-        />
-        <div className="search-bar">
-          <SearchBar
-            selected={selected}
-            submit={handleSubmit}
-            change={handleChange}
-          />
+    <>
+      {isLoading && (
+      <div className={styles.spinnerContainer}>
+        <div className={styles.ldsRing}>
+          <div />
+          <div />
+          <div />
+          <div />
         </div>
-        { masterlist.length <= 0 ? ''
-          : (
-            <div className={styles.pokeList}>
-              <CardList
-                list={filteredList.length > 0 ? filteredList : masterlist}
-                unlink={handleUnLinking}
-              />
-            </div>
-          )}
       </div>
-    </div>
+      )}
+      <div className={styles.container}>
+        <div className={styles.listPage}>
+          <Header
+            filterText={filter}
+            change={handleFilterList}
+            disabledInput={masterlist.length < 2}
+          />
+          <div className="search-bar">
+            <SearchBar
+              selected={selected}
+              submit={handleSubmit}
+              change={handleChange}
+            />
+          </div>
+          { masterlist.length <= 0 ? ''
+            : (
+              <div className={styles.pokeList}>
+                <CardList
+                  list={filteredList.length > 0 ? filteredList : masterlist}
+                  unlink={handleUnLinking}
+                />
+              </div>
+            )}
+        </div>
+      </div>
+    </>
   );
 }
 
