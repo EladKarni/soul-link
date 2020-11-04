@@ -6,18 +6,17 @@ const pokeList = {"count":151,"next":"https://pokeapi.co/api/v2/pokemon?offset=1
 admin.initializeApp()
 
 //Callable function
-exports.generateCode = functions.https.onCall(async (data, context) => {
+exports.generateCode = functions.https.onCall((data, context) => {
     let querySnap, shuffled = null
     do {
         shuffled = pokeList.results.sort(() => 0.5 - Math.random()).slice(0, 3);
         shuffled = shuffled.map((pokemon) => pokemon.name )
-        // eslint-disable-next-line no-await-in-loop
-        querySnap = await admin.firestore().collection(`SL-${shuffled.join('_')}`).limit(1).get()
+        querySnap = admin.firestore().collection(`SL-${shuffled.join('_')}`).limit(1).get()
     } while (querySnap.empty)
     
     return shuffled.join('_')
     
-})
+}) 
 
 exports.doesListExist = functions.https.onCall(async (data, context) => {
     querySnap = await admin.firestore().collection(`SL-${data}`).limit(1).get()
