@@ -1,7 +1,23 @@
 .form-inline {
     margin-left: auto;
-    width: 25%;
-    .form-control {
-        width: 100%;
+    .form-control input{
+        width: 25vw;
+    }
+}
+
+#searchInput {
+    width: 325px;
+}
+
+@media only screen and (max-width: 550px) {
+    #logo {
+        display: none;
+    }
+    .form-inline {
+        margin: 0;
+    }
+    #searchInput {
+        margin: auto;
+        width: 90vw;
     }
 }

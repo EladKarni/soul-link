@@ -10,14 +10,15 @@ const Header = ({
   filterText, disabledInput, change,
 }) => (
   <Navbar bg="dark" variant="dark">
-    <Navbar.Brand href="/">
+    <Navbar.Brand href="/" id="logo">
       {' Soul-Link PokeApp'}
     </Navbar.Brand>
     <Form inline onSubmit={(e) => e.preventDefault()}>
       <FormControl
         className="search-input"
         type="text"
-        placeholder="Search for Nickname, Pokemon, or Type"
+        id="searchInput"
+        placeholder="Search for Nickname, Pokemon, or Type..."
         value={filterText}
         disabled={disabledInput}
         onChange={change}
