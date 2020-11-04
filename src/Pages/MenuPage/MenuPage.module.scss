@@ -20,7 +20,7 @@
         border-radius: 10px;
         margin: auto;
         z-index: 3;
-        min-width: 300px;
+        min-width: 425px;
         box-shadow: 16px 21px 18px 3px rgba(0,0,0,0.5);
 
         label {
@@ -29,7 +29,6 @@
 
         button {
             min-width: 100%;
-            background-color: #543956;
             border: none;
             color: #d5d0d6;
             font-weight: bolder;
@@ -43,6 +42,15 @@
             &:focus {
                 box-shadow: none;
             }
+
+        }
+
+        .joinBtn {
+            background-color: #482e4a;
+        }
+        .createBtn {
+            margin-top: 1em;
+            background-color: #5b2b5c;
         }
         .errorLabel {
             color: rgba(136, 17, 17, 0.863);

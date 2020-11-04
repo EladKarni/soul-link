@@ -24,7 +24,7 @@ function MenuPage() {
   const handleCreate = () => {
     const generateCode = firebase.functions().httpsCallable('generateCode');
     generateCode().then((result) => {
-      console.log(result);
+      history.push(`/SL-${result.data}`);
     });
   };
 
@@ -39,13 +39,13 @@ function MenuPage() {
                 SL-
               </InputGroup.Text>
             </InputGroup.Prepend>
-            <Form.Control onChange={(e) => setSCode(e.target.value)} type="text" placeholder="423f2gf7" />
+            <Form.Control onChange={(e) => setSCode(e.target.value)} type="text" placeholder="Enter Code Here" />
           </InputGroup>
           <Form.Label className={styles.errorLabel}>
             {err}
           </Form.Label>
-          <Button type="submit" onClick={handleSubmit}>Join</Button>
-          <Button type="button" onClick={handleCreate}>Join</Button>
+          <Button className={styles.joinBtn} type="submit" onClick={handleSubmit}>Join</Button>
+          <Button className={styles.createBtn} type="button" onClick={handleCreate}>Create</Button>
         </Form>
       </div>
     </div>
