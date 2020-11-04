@@ -20,7 +20,7 @@ function MenuPage() {
         newCode = sCode.slice(3);
       }
       doesListExist(`${newCode}`).then((result) => {
-        if (result.data) {
+        if (!result.data) {
           setLoading(false);
           setErr('Please Check The Code');
         } else {
@@ -35,8 +35,8 @@ function MenuPage() {
   };
   const handleCreate = () => {
     setLoading(true);
-    const generateCode = firebase.functions().httpsCallable('generateCode');
-    generateCode().then((result) => {
+    const createNewList = firebase.functions().httpsCallable('createNewList');
+    createNewList().then((result) => {
       setLoading(false);
       history.push(`/SL-${result.data}`);
     });
