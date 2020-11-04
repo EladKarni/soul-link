@@ -13,7 +13,9 @@ const PokeCard = (props) => {
   const { listID } = useParams();
 
   const titleSubmit = (e, value) => {
-    firebase.firestore().collection(listID).doc(card.id).update({ title: value });
+    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+      .doc(card.id)
+      .update({ title: value });
   };
 
   const nickSubmit = (e, value, index) => {
@@ -23,14 +25,14 @@ const PokeCard = (props) => {
         let document = await transaction.get(
           firebase
             .firestore()
-            .doc(`${listID}/${card.id}`),
+            .doc(`soul-list/${listID}/linked-poke-list/${card.id}`),
         );
         document = document.data();
         document.pokemon[index].nickname = value;
         transaction.update(
           firebase
             .firestore()
-            .doc(`${listID}/${card.id}`),
+            .doc(`soul-list/${listID}/linked-poke-list/${card.id}`),
           {
             pokemon: document.pokemon,
             last_updated: new Date().getTime(),
