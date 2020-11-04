@@ -7,17 +7,29 @@ import styles from './MenuPage.module.scss';
 function MenuPage() {
   const [sCode, setSCode] = useState('');
   const [err, setErr] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
+    let newCode = sCode;
+    const doesListExist = firebase.functions().httpsCallable('doesListExist');
     if (sCode.length > 0) {
       if (sCode.toLowerCase().search(/sl-/) === 0) {
-        history.push(`/SL-${sCode.slice(3)}`);
-      } else {
-        history.push(`/SL-${sCode}`);
+        newCode = sCode.slice(3);
       }
+      doesListExist(`${newCode.toLowerCase()}`).then((result) => {
+        if (result.data) {
+          setLoading(false);
+          setErr('Please Check The Code');
+        } else {
+          setLoading(false);
+          history.push(`/SL-${newCode}`);
+        }
+      });
     } else {
+      setLoading(false);
       setErr('Please add a code');
     }
   };
@@ -27,6 +39,8 @@ function MenuPage() {
       history.push(`/SL-${result.data}`);
     });
   };
+
+  const loadSpinner = () => (<Button className={styles.joinBtn} type="submit" disabled={isLoading} onClick={handleSubmit}>{isLoading ? <span className={styles.loader}>Loading...</span> : <span>Join</span>}</Button>);
 
   return (
     <div className={styles.menuPage}>
@@ -44,8 +58,8 @@ function MenuPage() {
           <Form.Label className={styles.errorLabel}>
             {err}
           </Form.Label>
-          <Button className={styles.joinBtn} type="submit" onClick={handleSubmit}>Join</Button>
-          <Button className={styles.createBtn} type="button" onClick={handleCreate}>Create</Button>
+          {loadSpinner()}
+          <Button className={styles.createBtn} disabled={isLoading} type="button" onClick={handleCreate}>Create</Button>
         </Form>
       </div>
     </div>
