@@ -23,6 +23,3 @@ exports.doesListExist = functions.https.onCall(async (data, context) => {
     console.log(`data was: ${data}, and result was ${querySnap.empty}`)
     return querySnap.empty
 })
-
-// console.log(`querySnap has: (${querySnap.size}) docs`);
-// console.log(`Data is really: ${JSON.stringify(data)}`)
