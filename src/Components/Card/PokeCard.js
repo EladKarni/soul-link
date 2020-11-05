@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Tilt from 'react-parallax-tilt';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from '../../Config/Firebase';
 import styles from './PokeCard.module.scss';
 import Editable from '../Editable/Editable';
 
