@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Pokedex } from 'pokeapi-js-wrapper';
 import { useParams, useHistory } from 'react-router-dom';
-import firebase from '../../Config/Firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import CardList from '../../Components/CardList/CardList';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import Header from '../../Components/Header/Header';

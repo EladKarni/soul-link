@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import styles from './MenuPage.module.scss';
 
 function MenuPage() {
