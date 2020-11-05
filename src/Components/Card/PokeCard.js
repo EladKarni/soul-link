@@ -71,20 +71,16 @@ const PokeCard = (props) => {
 
       <div className={styles.card}>
         <div className={styles.title}>
-          {title?.length > 0
-            ? (
-              <Editable
-                text={title}
-                placeholder={card.title}
-                type="input"
-                cssStyle={styles.inlineInput}
-                listCode={listID}
-                changeText={changeTitle}
-                cardID={card.id}
-                syncFunc={titleSubmit}
-              />
-            )
-            : null }
+          <Editable
+            text={title}
+            placeholder={card.title}
+            type="input"
+            cssStyle={styles.inlineInput}
+            listCode={listID}
+            changeText={changeTitle}
+            cardID={card.id}
+            syncFunc={titleSubmit}
+          />
         </div>
         <div className={styles.sprite}>
           <div className={styles.circle} />
@@ -100,21 +96,17 @@ const PokeCard = (props) => {
           {card.pokemon.map(({ name: pokemon, types }, index) => (
             <div className={styles.info} key={pokemon}>
               <div className={styles.nickname}>
-                {nickname[index]?.length > 0
-                  ? (
-                    <Editable
-                      text={nickname[index]}
-                      placeholder={card.nickname}
-                      type="input"
-                      cssStyle={styles.nickname}
-                      listCode={listID}
-                      changeText={changeNickname}
-                      cardID={card.id}
-                      syncFunc={nickSubmit}
-                      index={index}
-                    />
-                  )
-                  : null}
+                <Editable
+                  text={nickname[index]}
+                  placeholder={card.nickname}
+                  type="input"
+                  cssStyle={styles.nickname}
+                  listCode={listID}
+                  changeText={changeNickname}
+                  cardID={card.id}
+                  syncFunc={nickSubmit}
+                  index={index}
+                />
               </div>
               <div className={styles.name}>{pokemon}</div>
               <div className={styles.types}>

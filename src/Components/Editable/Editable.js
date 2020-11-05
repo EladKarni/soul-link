@@ -32,7 +32,6 @@ const Editable = ({
           tabIndex={0}
           onBlur={() => setEditing(false)}
           className={cssStyle}
-          // onKeyDown={(e) => handleKeyDown(e, type)}
         >
           <input
             ref={inputEl}
