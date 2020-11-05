@@ -9,6 +9,8 @@ import MenuPage from './Pages/MenuPage/MenuPage';
 
 import './App.scss';
 
+console.log('init commit for dev');
+
 const App = () => (
   <Router>
     <Switch>
