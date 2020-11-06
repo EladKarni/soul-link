@@ -56,7 +56,7 @@ const Editable = ({
           onClick={onLabelClicked}
         >
           <span>
-            {text || 'Editable content'}
+            {text}
           </span>
         </div>
       )}
@@ -66,10 +66,11 @@ const Editable = ({
 
 Editable.defaultProps = {
   index: 0,
+  text: 'Edit Me!',
 };
 
 Editable.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   type: PropTypes.string.isRequired,
   cssStyle: PropTypes.string.isRequired,
   changeText: PropTypes.func.isRequired,
