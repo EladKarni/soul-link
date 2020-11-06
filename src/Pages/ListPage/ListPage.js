@@ -29,7 +29,7 @@ function ListPage() {
         return {
           name,
           sprites,
-          types: types.reverse(),
+          types: types.sort((a, b) => a.slot - b.slot),
           nickname: 'Edit Me',
         };
       }),

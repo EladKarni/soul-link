@@ -110,7 +110,7 @@ const PokeCard = (props) => {
               </div>
               <div className={styles.name}>{pokemon}</div>
               <div className={styles.types}>
-                {types.map(({ type: { name: Poketype } }) => (
+                {types.sort((a, b) => a.slot - b.slot).map(({ type: { name: Poketype } }) => (
                   <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
                     {Poketype}
                   </span>
