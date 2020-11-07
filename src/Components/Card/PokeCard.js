@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Tilt from 'react-parallax-tilt';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import { Draggable } from 'react-beautiful-dnd';
 import firebase from '../../Config/Firebase';
 import styles from './PokeCard.module.scss';
 import Editable from '../Editable/Editable';
 
 const PokeCard = (props) => {
-  const { card, unlinked } = props;
+  const { card, unlinked, cIndex } = props;
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState([]);
   const { listID } = useParams();
@@ -60,83 +61,91 @@ const PokeCard = (props) => {
   }, [card]);
 
   return (
-    <Tilt
-      className={styles.parallaxEffect}
-      tiltMaxAngleX={2}
-      tiltMaxAngleY={2}
-      tiltReverse
-      transitionSpeed={2500}
-      perspective={500}
-    >
+    <Draggable draggableId={card.id} index={cIndex}>
+      {(provided) => (
+        <Tilt
+          className={styles.parallaxEffect}
+          tiltMaxAngleX={2}
+          tiltMaxAngleY={2}
+          tiltReverse
+          transitionSpeed={2500}
+          perspective={500}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
 
-      <div className={styles.card}>
-        <div className={styles.title}>
-          <Editable
-            text={title}
-            placeholder={card.title}
-            type="input"
-            cssStyle={styles.inlineInput}
-            listCode={listID}
-            changeText={changeTitle}
-            cardID={card.id}
-            syncFunc={titleSubmit}
-          />
-        </div>
-        <div className={styles.sprite}>
-          <div className={styles.circle} />
-          {card.pokemon.map(({ sprites }) => (
-            <img
-              key={sprites.front_default}
-              src={sprites.front_default}
-              alt="pokemon-sprite"
-            />
-          ))}
-        </div>
-        <div className={styles.infoGroup}>
-          {card.pokemon.map(({ name: pokemon, types }, index) => (
-            <div className={styles.info} key={pokemon}>
-              <div className={styles.nickname}>
-                <Editable
-                  text={nickname[index]}
-                  placeholder={card.nickname}
-                  type="input"
-                  cssStyle={styles.nickname}
-                  listCode={listID}
-                  changeText={changeNickname}
-                  cardID={card.id}
-                  syncFunc={nickSubmit}
-                  index={index}
-                />
-              </div>
-              <div className={styles.name}>{pokemon}</div>
-              <div className={styles.types}>
-                {types.sort((a, b) => a.slot - b.slot).map(({ type: { name: Poketype } }) => (
-                  <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
-                    {Poketype}
-                  </span>
-                ))}
-              </div>
+          <div className={styles.card}>
+            <div className={styles.title}>
+              <Editable
+                text={title}
+                placeholder={card.title}
+                type="input"
+                cssStyle={styles.inlineInput}
+                listCode={listID}
+                changeText={changeTitle}
+                cardID={card.id}
+                syncFunc={titleSubmit}
+              />
             </div>
-          ))}
-        </div>
-        <div className={styles.unlink}>
-          <button
-            type="button"
-            onClick={() => {
-              unlinked(card.id);
-            }}
-          >
-            Destroy Link
-          </button>
-        </div>
-      </div>
-    </Tilt>
+            <div className={styles.sprite}>
+              <div className={styles.circle} />
+              {card.pokemon.map(({ sprites }) => (
+                <img
+                  key={sprites.front_default}
+                  src={sprites.front_default}
+                  alt="pokemon-sprite"
+                />
+              ))}
+            </div>
+            <div className={styles.infoGroup}>
+              {card.pokemon.map(({ name: pokemon, types }, index) => (
+                <div className={styles.info} key={pokemon}>
+                  <div className={styles.nickname}>
+                    <Editable
+                      text={nickname[index]}
+                      placeholder={card.nickname}
+                      type="input"
+                      cssStyle={styles.nickname}
+                      listCode={listID}
+                      changeText={changeNickname}
+                      cardID={card.id}
+                      syncFunc={nickSubmit}
+                      index={index}
+                    />
+                  </div>
+                  <div className={styles.name}>{pokemon}</div>
+                  <div className={styles.types}>
+                    {types.sort((a, b) => a.slot - b.slot).map(({ type: { name: Poketype } }) => (
+                      <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
+                        {Poketype}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={styles.unlink}>
+              <button
+                type="button"
+                onClick={() => {
+                  unlinked(card.id);
+                }}
+              >
+                Destroy Link
+              </button>
+            </div>
+          </div>
+        </Tilt>
+      )}
+    </Draggable>
   );
 };
 
 PokeCard.propTypes = {
   card: PropTypes.object.isRequired,
   unlinked: PropTypes.func.isRequired,
+  cIndex: PropTypes.number.isRequired,
 };
 
 export default PokeCard;

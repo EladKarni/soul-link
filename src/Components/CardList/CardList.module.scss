@@ -1,0 +1,13 @@
+.partyList, .boxList {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+}
+.partyList {
+    background: cornflowerblue;
+    margin: 1 2em 0 2em;
+    padding-bottom: 1em;
+}
+.boxList {
+    margin-top: 5em;
+}
