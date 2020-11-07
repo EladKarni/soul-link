@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pokedex } from 'pokeapi-js-wrapper';
 import { useParams, useHistory } from 'react-router-dom';
+import { DragDropContext } from 'react-beautiful-dnd';
 import firebase from '../../Config/Firebase';
 import CardList from '../../Components/CardList/CardList';
 import SearchBar from '../../Components/SearchBar/SearchBar';
@@ -163,10 +164,13 @@ function ListPage() {
           { masterlist.length <= 0 ? ''
             : (
               <div className={styles.pokeList}>
-                <CardList
-                  list={filteredList.length > 0 ? filteredList : masterlist}
-                  unlink={handleUnLinking}
-                />
+                <DragDropContext onDragEnd={(result) => console.log(result)}>
+                  <CardList
+                    list={filteredList.length > 0 ? filteredList : masterlist}
+                    unlink={handleUnLinking}
+                  />
+                </DragDropContext>
+
               </div>
             )}
         </div>

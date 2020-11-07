@@ -64,6 +64,7 @@ const PokeCard = (props) => {
     <Draggable draggableId={card.id} index={cIndex}>
       {(provided) => (
         <Tilt
+          ref={provided.innerRef}
           className={styles.parallaxEffect}
           tiltMaxAngleX={2}
           tiltMaxAngleY={2}
@@ -72,7 +73,6 @@ const PokeCard = (props) => {
           perspective={500}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          ref={provided.innerRef}
         >
 
           <div className={styles.card}>
@@ -116,7 +116,7 @@ const PokeCard = (props) => {
                   </div>
                   <div className={styles.name}>{pokemon}</div>
                   <div className={styles.types}>
-                    {types.sort((a, b) => a.slot - b.slot).map(({ type: { name: Poketype } }) => (
+                    {types.map(({ type: { name: Poketype } }) => (
                       <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
                         {Poketype}
                       </span>
