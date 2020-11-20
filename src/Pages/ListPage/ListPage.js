@@ -168,6 +168,7 @@ function ListPage() {
                   <CardList
                     list={filteredList.length > 0 ? filteredList : masterlist}
                     unlink={handleUnLinking}
+                    idList={listID}
                   />
                 </DragDropContext>
 

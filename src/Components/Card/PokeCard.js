@@ -63,80 +63,84 @@ const PokeCard = (props) => {
   return (
     <Draggable draggableId={card.id} index={cIndex}>
       {(provided) => (
-        <Tilt
+        <div
+          className={styles.card}
           ref={provided.innerRef}
-          className={styles.parallaxEffect}
-          tiltMaxAngleX={2}
-          tiltMaxAngleY={2}
-          tiltReverse
-          transitionSpeed={2500}
-          perspective={500}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
+          <Tilt
+            className={styles.parallaxEffect}
+            tiltMaxAngleX={2}
+            tiltMaxAngleY={2}
+            tiltReverse
+            transitionSpeed={2500}
+            perspective={500}
+          >
 
-          <div className={styles.card}>
-            <div className={styles.title}>
-              <Editable
-                text={title}
-                placeholder={card.title}
-                type="input"
-                cssStyle={styles.inlineInput}
-                listCode={listID}
-                changeText={changeTitle}
-                cardID={card.id}
-                syncFunc={titleSubmit}
-              />
-            </div>
-            <div className={styles.sprite}>
-              <div className={styles.circle} />
-              {card.pokemon.map(({ sprites }) => (
-                <img
-                  key={sprites.front_default}
-                  src={sprites.front_default}
-                  alt="pokemon-sprite"
+            <div className={styles.card}>
+              <div className={styles.title}>
+                <Editable
+                  text={title}
+                  placeholder={card.title}
+                  type="input"
+                  cssStyle={styles.inlineInput}
+                  listCode={listID}
+                  changeText={changeTitle}
+                  cardID={card.id}
+                  syncFunc={titleSubmit}
                 />
-              ))}
-            </div>
-            <div className={styles.infoGroup}>
-              {card.pokemon.map(({ name: pokemon, types }, index) => (
-                <div className={styles.info} key={pokemon}>
-                  <div className={styles.nickname}>
-                    <Editable
-                      text={nickname[index]}
-                      placeholder={card.nickname}
-                      type="input"
-                      cssStyle={styles.nickname}
-                      listCode={listID}
-                      changeText={changeNickname}
-                      cardID={card.id}
-                      syncFunc={nickSubmit}
-                      index={index}
-                    />
+              </div>
+              <div className={styles.sprite}>
+                <div className={styles.circle} />
+                {card.pokemon.map(({ sprites }) => (
+                  <img
+                    key={sprites.front_default}
+                    src={sprites.front_default}
+                    alt="pokemon-sprite"
+                  />
+                ))}
+              </div>
+              <div className={styles.infoGroup}>
+                {card.pokemon.map(({ name: pokemon, types }, index) => (
+                  <div className={styles.info} key={pokemon}>
+                    <div className={styles.nickname}>
+                      <Editable
+                        text={nickname[index]}
+                        placeholder={card.nickname}
+                        type="input"
+                        cssStyle={styles.nickname}
+                        listCode={listID}
+                        changeText={changeNickname}
+                        cardID={card.id}
+                        syncFunc={nickSubmit}
+                        index={index}
+                      />
+                    </div>
+                    <div className={styles.name}>{pokemon}</div>
+                    <div className={styles.types}>
+                      {types.map(({ type: { name: Poketype } }) => (
+                        <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
+                          {Poketype}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className={styles.name}>{pokemon}</div>
-                  <div className={styles.types}>
-                    {types.map(({ type: { name: Poketype } }) => (
-                      <span className={[`${styles.typeTag}`, Poketype].join(' ')} key={Poketype}>
-                        {Poketype}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className={styles.unlink}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    unlinked(card.id);
+                  }}
+                >
+                  Destroy Link
+                </button>
+              </div>
             </div>
-            <div className={styles.unlink}>
-              <button
-                type="button"
-                onClick={() => {
-                  unlinked(card.id);
-                }}
-              >
-                Destroy Link
-              </button>
-            </div>
-          </div>
-        </Tilt>
+          </Tilt>
+        </div>
       )}
     </Draggable>
   );
