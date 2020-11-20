@@ -88,12 +88,18 @@ function ListPage() {
         }
 
         let isMatch = false;
-        dataset.pokemon.forEach(({ name, types, nickname }) => {
+        dataset.pokemon.forEach(({
+          name, types, nickname,
+        }) => {
           if (!isMatch && name.indexOf(trimmedValue) > -1) {
             isMatch = true;
           }
 
           if (!isMatch && nickname.toLowerCase().indexOf(trimmedValue) > -1) {
+            isMatch = true;
+          }
+
+          if (!isMatch && dataset.title.toLowerCase().indexOf(trimmedValue) > -1) {
             isMatch = true;
           }
 
@@ -110,6 +116,7 @@ function ListPage() {
 
         return null;
       }).filter((dataset) => dataset !== null);
+
     setFilter(value);
     setFilteredList([...newFilteredList]);
   };
