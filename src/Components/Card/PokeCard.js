@@ -7,7 +7,7 @@ import styles from './PokeCard.module.scss';
 import Editable from '../Editable/Editable';
 
 const PokeCard = (props) => {
-  const { card, unlinked } = props;
+  const { card, unlinked, revived } = props;
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState([]);
   const { listID } = useParams();
@@ -71,7 +71,7 @@ const PokeCard = (props) => {
 
       <div className={!card.dead ? styles.card : `${styles.rip}`}>
         {card.dead && (
-        <div className={styles.ripLabel}>
+        <div aria-hidden="true" role="button" onClick={() => revived(card.id)} className={styles.ripLabel}>
           R.I.P
         </div>
         )}
@@ -147,6 +147,7 @@ const PokeCard = (props) => {
 PokeCard.propTypes = {
   card: PropTypes.object.isRequired,
   unlinked: PropTypes.func.isRequired,
+  revived: PropTypes.func.isRequired,
 };
 
 export default PokeCard;
