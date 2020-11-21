@@ -64,16 +64,15 @@ function ListPage() {
   };
 
   const handleUnLinking = (id) => {
-    const newMasterList = masterlist.filter((pair) => pair.id !== id);
-    const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
+    // const newMasterList = masterlist.filter((pair) => pair.id !== id);
+    // const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
 
-    setMasterlist([...newMasterList]);
-    setFilteredList(newFilteredList);
+    // setMasterlist([...newMasterList]);
+    // setFilteredList(newFilteredList);
 
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
       .doc(id)
-      .delete()
-      .then(() => 'Document successfully deleted!')
+      .update({ dead: true })
       .catch((error) => error);
   };
 

@@ -62,14 +62,19 @@ const PokeCard = (props) => {
   return (
     <Tilt
       className={styles.parallaxEffect}
-      tiltMaxAngleX={2}
-      tiltMaxAngleY={2}
+      tiltMaxAngleX={card.dead ? 0 : 2}
+      tiltMaxAngleY={card.dead ? 0 : 2}
       tiltReverse
       transitionSpeed={2500}
       perspective={500}
     >
 
-      <div className={styles.card}>
+      <div className={!card.dead ? styles.card : `${styles.rip}`}>
+        {card.dead && (
+        <div className={styles.ripLabel}>
+          R.I.P
+        </div>
+        )}
         <div className={styles.title}>
           <Editable
             text={title}
@@ -79,6 +84,7 @@ const PokeCard = (props) => {
             listCode={listID}
             changeText={changeTitle}
             cardID={card.id}
+            dead={card.dead}
             syncFunc={titleSubmit}
           />
         </div>
@@ -106,6 +112,7 @@ const PokeCard = (props) => {
                   cardID={card.id}
                   syncFunc={nickSubmit}
                   index={index}
+                  dead={card.dead}
                 />
               </div>
               <div className={styles.name}>{pokemon}</div>
@@ -119,6 +126,8 @@ const PokeCard = (props) => {
             </div>
           ))}
         </div>
+        {!card.dead
+        && (
         <div className={styles.unlink}>
           <button
             type="button"
@@ -129,6 +138,7 @@ const PokeCard = (props) => {
             Destroy Link
           </button>
         </div>
+        )}
       </div>
     </Tilt>
   );
