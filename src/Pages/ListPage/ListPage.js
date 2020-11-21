@@ -64,15 +64,16 @@ function ListPage() {
   };
 
   const handleUnLinking = (id) => {
-    // const newMasterList = masterlist.filter((pair) => pair.id !== id);
-    // const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
-
-    // setMasterlist([...newMasterList]);
-    // setFilteredList(newFilteredList);
-
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
       .doc(id)
       .update({ dead: true })
+      .catch((error) => error);
+  };
+
+  const handleRevive = (id) => {
+    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+      .doc(id)
+      .update({ dead: false })
       .catch((error) => error);
   };
 
@@ -172,6 +173,7 @@ function ListPage() {
                 <CardList
                   list={filteredList.length > 0 ? filteredList : masterlist}
                   unlink={handleUnLinking}
+                  revive={handleRevive}
                 />
               </div>
             )}
