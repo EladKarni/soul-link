@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Pokedex } from 'pokeapi-js-wrapper';
 import { useParams, useHistory } from 'react-router-dom';
 import firebase from '../../Config/Firebase';
 import CardList from '../../Components/CardList/CardList';
@@ -10,58 +9,12 @@ import styles from './ListPage.module.scss';
 
 function ListPage() {
   const [filter, setFilter] = useState('');
-  const [selected, setSelected] = useState([]);
   const [masterlist, setMasterlist] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const { listID } = useParams();
   const history = useHistory();
-
-  const { getPokemonByName } = new Pokedex();
-
-  const handleSubmit = async () => {
-    const pokeInfo = await Promise.all(
-      selected.map(async ({ name: pokemonName }) => {
-        const { name, types, sprites } = await getPokemonByName(
-          pokemonName,
-        );
-        return {
-          name,
-          sprites,
-          types: types.sort((a, b) => a.slot - b.slot),
-          nickname: 'Edit Me',
-        };
-      }),
-    );
-
-    firebase.firestore().collection('soul-list')
-      .doc(listID).collection('linked-poke-list')
-      .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
-      .then((docRef) => {
-        const { id } = docRef;
-        setMasterlist([
-          ...masterlist,
-          {
-            pokemon: pokeInfo,
-            id,
-          },
-        ]);
-        firebase.firestore().collection('soul-list')
-          .doc(listID).collection('linked-poke-list')
-          .doc(id)
-          .update({
-            id,
-          })
-          .then(() => 'Success')
-          .catch((error) => error);
-        setSelected([]);
-      });
-  };
-
-  const handleChange = (event) => {
-    setSelected(event);
-  };
 
   const handleUnLinking = (id) => {
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
@@ -161,11 +114,7 @@ function ListPage() {
             disabledInput={masterlist.length < 2}
           />
           <div className="search-bar">
-            <SearchBar
-              selected={selected}
-              submit={handleSubmit}
-              change={handleChange}
-            />
+            <SearchBar listID={listID} />
           </div>
           { masterlist.length <= 0 ? ''
             : (
