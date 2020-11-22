@@ -1,20 +1,57 @@
 import React, { useEffect, useState } from 'react';
-// import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import InputGroup from 'react-bootstrap/InputGroup';
 import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
-import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Pokedex } from 'pokeapi-js-wrapper';
 import PropTypes from 'prop-types';
-
+import firebase from '../../Config/Firebase';
 import styles from './SearchBar.module.scss';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const SearchBar = ({ change, selected, submit }) => {
+const SearchBar = ({ listID }) => {
   const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState([]);
 
+  const { getPokemonByName } = new Pokedex();
+
+  const handleSubmit = async () => {
+    const pokeInfo = await Promise.all(
+      selected.map(async ({ name: pokemonName }) => {
+        const { name, types, sprites } = await getPokemonByName(
+          pokemonName,
+        );
+        return {
+          name,
+          sprites,
+          types: types.sort((a, b) => a.slot - b.slot),
+          nickname: 'Edit Me',
+        };
+      }),
+    );
+
+    firebase.firestore().collection('soul-list')
+      .doc(listID).collection('linked-poke-list')
+      .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
+      .then((docRef) => {
+        const { id } = docRef;
+        firebase.firestore().collection('soul-list')
+          .doc(listID).collection('linked-poke-list')
+          .doc(id)
+          .update({
+            id,
+          })
+          .then(() => 'Success')
+          .catch((error) => error);
+        setSelected([]);
+      });
+  };
+
+  const handleChange = (event) => {
+    setSelected(event);
+  };
   const typeaheadProps = {
     onChange: (selectedPoke) => {
-      change(selectedPoke);
+      handleChange(selectedPoke);
     },
     id: 'autoComplete',
     clearButton: true,
@@ -45,7 +82,7 @@ const SearchBar = ({ change, selected, submit }) => {
         className={styles.btn_OutlineSecondary}
         disabled={selected.length !== 2}
         onClick={() => {
-          submit();
+          handleSubmit();
           typeaheadRef.current.clear();
         }}
       >
@@ -56,9 +93,7 @@ const SearchBar = ({ change, selected, submit }) => {
 };
 
 SearchBar.propTypes = {
-  change: PropTypes.func.isRequired,
-  selected: PropTypes.array.isRequired,
-  submit: PropTypes.func.isRequired,
+  listID: PropTypes.string.isRequired,
 };
 
 export default SearchBar;
