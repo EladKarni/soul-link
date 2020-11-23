@@ -7,7 +7,9 @@ import firebase from '../../Config/Firebase';
 import styles from './SearchBar.module.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const SearchBar = ({ listID, required, extraData }) => {
+const SearchBar = ({
+  listID, required, extraData, pokeIndex, closeModal,
+}) => {
   const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -62,10 +64,30 @@ const SearchBar = ({ listID, required, extraData }) => {
     console.log('New Pokemon Object', pokeInfo[0]);
     console.log('Array Of Old Pokemon', extraData);
 
-    firebase.firestore().collection('soul-list')
-      .doc(listID).collection('linked-poke-list')
-      .update({ pokemon: [extraData[0], pokeInfo[0]] })
-      .catch((error) => error);
+    let newPokeCard = [];
+    const oldPokemon = extraData.pokemon.filter((pokemon, index) => index !== pokeIndex)[0];
+    const newEvolution = { ...pokeInfo[0], nickname: extraData.pokemon[pokeIndex].nickname };
+
+    if (!pokeIndex) {
+      newPokeCard = [
+        newEvolution,
+        oldPokemon,
+      ];
+    } else {
+      newPokeCard = [
+        oldPokemon,
+        newEvolution,
+      ];
+    }
+
+    console.log(newPokeCard);
+    console.log(closeModal);
+
+    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+      .doc(extraData.id)
+      .update({ pokemon: newPokeCard })
+      .then(closeModal())
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (event) => {
@@ -121,10 +143,18 @@ const SearchBar = ({ listID, required, extraData }) => {
   );
 };
 
+SearchBar.defaultProps = {
+  pokeIndex: -1,
+  extraData: {},
+  closeModal: null,
+};
+
 SearchBar.propTypes = {
   listID: PropTypes.string.isRequired,
   required: PropTypes.number.isRequired,
-  extraData: PropTypes.array.isRequired,
+  pokeIndex: PropTypes.number,
+  extraData: PropTypes.object,
+  closeModal: PropTypes.func,
 };
 
 export default SearchBar;

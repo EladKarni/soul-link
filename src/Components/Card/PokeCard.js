@@ -3,7 +3,6 @@ import Tilt from 'react-parallax-tilt';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import firebase from '../../Config/Firebase';
 import styles from './PokeCard.module.scss';
 import Editable from '../Editable/Editable';
@@ -17,13 +16,11 @@ const PokeCard = (props) => {
   const [nickname, setNickname] = useState([]);
   const { listID } = useParams();
   const [show, setShow] = useState(false);
-
+  const [activeIndex, setActiveIndex] = useState();
   const handleClose = () => setShow(false);
-  const handleSubmit = () => {
-    console.log('Card ID', card.id, 0);
-    setShow(false);
-  };
-  const handleShow = () => {
+
+  const handleShow = (selectedIndex) => {
+    setActiveIndex(selectedIndex);
     setShow(true);
   };
 
@@ -161,17 +158,17 @@ const PokeCard = (props) => {
       </Tilt>
       <Modal show={show} animation={false} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Select Evolution</Modal.Title>
         </Modal.Header>
-        <SearchBar listID={listID} extraData={card.pokemon} required={1} />
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <div className={styles.modalSearchBar}>
+          <SearchBar
+            closeModal={handleClose}
+            listID={listID}
+            pokeIndex={activeIndex}
+            extraData={card}
+            required={1}
+          />
+        </div>
       </Modal>
     </>
   );
