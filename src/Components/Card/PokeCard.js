@@ -20,8 +20,10 @@ const PokeCard = (props) => {
   const handleClose = () => setShow(false);
 
   const handleShow = (selectedIndex) => {
-    setActiveIndex(selectedIndex);
-    setShow(true);
+    if (!card.dead) {
+      setActiveIndex(selectedIndex);
+      setShow(true);
+    }
   };
 
   const titleSubmit = (e, value) => {
