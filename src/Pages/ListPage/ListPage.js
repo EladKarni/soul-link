@@ -114,7 +114,7 @@ function ListPage() {
             disabledInput={masterlist.length < 2}
           />
           <div className="search-bar">
-            <SearchBar listID={listID} />
+            <SearchBar listID={listID} required={2} />
           </div>
           { masterlist.length <= 0 ? ''
             : (
