@@ -7,11 +7,10 @@ import firebase from '../../Config/Firebase';
 import styles from './SearchBar.module.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const SearchBar = ({ listID }) => {
+const SearchBar = ({ listID, required, extraData }) => {
   const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
-
   const { getPokemonByName } = new Pokedex();
 
   const handleSubmit = async () => {
@@ -46,6 +45,29 @@ const SearchBar = ({ listID }) => {
       });
   };
 
+  const handleEvolve = async () => {
+    const pokeInfo = await Promise.all(
+      selected.map(async ({ name: pokemonName }) => {
+        const { name, types, sprites } = await getPokemonByName(
+          pokemonName,
+        );
+        return {
+          name,
+          sprites,
+          types: types.sort((a, b) => a.slot - b.slot),
+        };
+      }),
+    );
+
+    console.log('New Pokemon Object', pokeInfo[0]);
+    console.log('Array Of Old Pokemon', extraData);
+
+    firebase.firestore().collection('soul-list')
+      .doc(listID).collection('linked-poke-list')
+      .update({ pokemon: [extraData[0], pokeInfo[0]] })
+      .catch((error) => error);
+  };
+
   const handleChange = (event) => {
     setSelected(event);
   };
@@ -75,16 +97,23 @@ const SearchBar = ({ listID }) => {
     };
     getPokemonAPI();
   }, []);
+
+  const handleSwitch = () => {
+    if (required === 1) {
+      handleEvolve();
+    } else {
+      handleSubmit();
+    }
+    typeaheadRef.current.clear();
+  };
+
   return (
     <div className={styles.searchBar} id={styles.search}>
       <Typeahead className={styles.typeahead} {...typeaheadProps} />
       <Button
         className={styles.btn_OutlineSecondary}
-        disabled={selected.length !== 2}
-        onClick={() => {
-          handleSubmit();
-          typeaheadRef.current.clear();
-        }}
+        disabled={selected.length !== required}
+        onClick={() => handleSwitch()}
       >
         Bind
       </Button>
@@ -94,6 +123,8 @@ const SearchBar = ({ listID }) => {
 
 SearchBar.propTypes = {
   listID: PropTypes.string.isRequired,
+  required: PropTypes.number.isRequired,
+  extraData: PropTypes.array.isRequired,
 };
 
 export default SearchBar;

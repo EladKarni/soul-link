@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import firebase from '../../Config/Firebase';
 import styles from './PokeCard.module.scss';
 import Editable from '../Editable/Editable';
+import SearchBar from '../SearchBar/SearchBar';
 
 const PokeCard = (props) => {
   const {
@@ -162,6 +163,7 @@ const PokeCard = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
+        <SearchBar listID={listID} extraData={card.pokemon} required={1} />
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
