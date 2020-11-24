@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
-import { Pokedex } from 'pokeapi-js-wrapper';
 import PropTypes from 'prop-types';
 import firebase from '../../Config/Firebase';
 import styles from './SearchBar.module.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import GetPokemonFromPokeAPI from '../../Util/PokeAPI';
 
 const SearchBar = ({
   listID, required, extraData, pokeIndex, closeModal,
@@ -13,22 +13,9 @@ const SearchBar = ({
   const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
-  const { getPokemonByName } = new Pokedex();
 
   const handleSubmit = async () => {
-    const pokeInfo = await Promise.all(
-      selected.map(async ({ name: pokemonName }) => {
-        const { name, types, sprites } = await getPokemonByName(
-          pokemonName,
-        );
-        return {
-          name,
-          sprites,
-          types: types.sort((a, b) => a.slot - b.slot),
-          nickname: 'Edit Me',
-        };
-      }),
-    );
+    const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
     firebase.firestore().collection('soul-list')
       .doc(listID).collection('linked-poke-list')
@@ -48,21 +35,7 @@ const SearchBar = ({
   };
 
   const handleEvolve = async () => {
-    const pokeInfo = await Promise.all(
-      selected.map(async ({ name: pokemonName }) => {
-        const { name, types, sprites } = await getPokemonByName(
-          pokemonName,
-        );
-        return {
-          name,
-          sprites,
-          types: types.sort((a, b) => a.slot - b.slot),
-        };
-      }),
-    );
-
-    console.log('New Pokemon Object', pokeInfo[0]);
-    console.log('Array Of Old Pokemon', extraData);
+    const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
     let newPokeCard = [];
     const oldPokemon = extraData.pokemon.filter((pokemon, index) => index !== pokeIndex)[0];
@@ -80,19 +53,17 @@ const SearchBar = ({
       ];
     }
 
-    console.log(newPokeCard);
-    console.log(closeModal);
-
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
       .doc(extraData.id)
       .update({ pokemon: newPokeCard })
       .then(closeModal())
-      .catch((err) => console.log(err));
+      .catch((err) => err);
   };
 
   const handleChange = (event) => {
     setSelected(event);
   };
+
   const typeaheadProps = {
     onChange: (selectedPoke) => {
       handleChange(selectedPoke);
