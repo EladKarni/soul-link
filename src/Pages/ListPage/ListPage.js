@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Pokedex } from 'pokeapi-js-wrapper';
 import { useParams, useHistory } from 'react-router-dom';
 import firebase from '../../Config/Firebase';
 import CardList from '../../Components/CardList/CardList';
@@ -10,7 +9,6 @@ import styles from './ListPage.module.scss';
 
 function ListPage() {
   const [filter, setFilter] = useState('');
-  const [selected, setSelected] = useState([]);
   const [masterlist, setMasterlist] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -18,62 +16,17 @@ function ListPage() {
   const { listID } = useParams();
   const history = useHistory();
 
-  const { getPokemonByName } = new Pokedex();
-
-  const handleSubmit = async () => {
-    const pokeInfo = await Promise.all(
-      selected.map(async ({ name: pokemonName }) => {
-        const { name, types, sprites } = await getPokemonByName(
-          pokemonName,
-        );
-        return {
-          name,
-          sprites,
-          types: types.sort((a, b) => a.slot - b.slot),
-          nickname: 'Edit Me',
-        };
-      }),
-    );
-
-    firebase.firestore().collection('soul-list')
-      .doc(listID).collection('linked-poke-list')
-      .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
-      .then((docRef) => {
-        const { id } = docRef;
-        setMasterlist([
-          ...masterlist,
-          {
-            pokemon: pokeInfo,
-            id,
-          },
-        ]);
-        firebase.firestore().collection('soul-list')
-          .doc(listID).collection('linked-poke-list')
-          .doc(id)
-          .update({
-            id,
-          })
-          .then(() => 'Success')
-          .catch((error) => error);
-        setSelected([]);
-      });
-  };
-
-  const handleChange = (event) => {
-    setSelected(event);
-  };
-
   const handleUnLinking = (id) => {
-    const newMasterList = masterlist.filter((pair) => pair.id !== id);
-    const newFilteredList = filteredList?.filter((pair) => pair.id !== id);
-
-    setMasterlist([...newMasterList]);
-    setFilteredList(newFilteredList);
-
     firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
       .doc(id)
-      .delete()
-      .then(() => 'Document successfully deleted!')
+      .update({ dead: true })
+      .catch((error) => error);
+  };
+
+  const handleRevive = (id) => {
+    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+      .doc(id)
+      .update({ dead: false })
       .catch((error) => error);
   };
 
@@ -88,6 +41,15 @@ function ListPage() {
         }
 
         let isMatch = false;
+
+        if (!dataset.dead && trimmedValue === 'alive') {
+          isMatch = true;
+        }
+
+        if (dataset.dead && trimmedValue === 'dead') {
+          isMatch = true;
+        }
+
         dataset.pokemon.forEach(({
           name, types, nickname,
         }) => {
@@ -161,11 +123,7 @@ function ListPage() {
             disabledInput={masterlist.length < 2}
           />
           <div className="search-bar">
-            <SearchBar
-              selected={selected}
-              submit={handleSubmit}
-              change={handleChange}
-            />
+            <SearchBar listID={listID} required={2} />
           </div>
           { masterlist.length <= 0 ? ''
             : (
@@ -173,6 +131,7 @@ function ListPage() {
                 <CardList
                   list={filteredList.length > 0 ? filteredList : masterlist}
                   unlink={handleUnLinking}
+                  revive={handleRevive}
                 />
               </div>
             )}

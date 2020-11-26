@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './Editable.module.scss';
+
 const Editable = ({
   text,
   type,
@@ -11,13 +13,16 @@ const Editable = ({
   cardID,
   syncFunc,
   index,
+  dead,
   ...props
 }) => {
   const [isEditing, setEditing] = useState(false);
   const inputEl = useRef(null);
 
   const onLabelClicked = () => {
-    setEditing(true);
+    if (!dead) {
+      setEditing(true);
+    }
   };
 
   useEffect(() => {
@@ -53,6 +58,7 @@ const Editable = ({
         <div
           role="textbox"
           aria-hidden="true"
+          className={dead ? styles.disabledLabel : styles.label}
           onClick={onLabelClicked}
         >
           <span>
@@ -67,10 +73,12 @@ const Editable = ({
 Editable.defaultProps = {
   index: 0,
   text: 'Edit Me!',
+  dead: false,
 };
 
 Editable.propTypes = {
   text: PropTypes.string,
+  dead: PropTypes.bool,
   type: PropTypes.string.isRequired,
   cssStyle: PropTypes.string.isRequired,
   changeText: PropTypes.func.isRequired,
