@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import firebase from '../../Config/Firebase';
+import createNewList from '../../Util/CreateNewList';
 import styles from './MenuPage.module.scss';
 
 function MenuPage() {
@@ -33,14 +34,6 @@ function MenuPage() {
       setErr('Please add a code');
     }
   };
-  const handleCreate = () => {
-    setLoading(true);
-    const createNewList = firebase.functions().httpsCallable('createNewList');
-    createNewList().then((result) => {
-      setLoading(false);
-      history.push(`/SL-${result.data}`);
-    });
-  };
 
   const loadSpinner = () => (<Button className={styles.joinBtn} type="submit" disabled={isLoading} onClick={handleSubmit}>{isLoading ? <span className={styles.loader}>Loading...</span> : <span>Join</span>}</Button>);
 
@@ -61,7 +54,7 @@ function MenuPage() {
             {err}
           </Form.Label>
           {loadSpinner()}
-          <Button className={styles.createBtn} disabled={isLoading} type="button" onClick={handleCreate}>Create</Button>
+          <Button className={styles.createBtn} disabled={isLoading} type="button" onClick={() => createNewList()}>Create</Button>
         </Form>
       </div>
     </div>
