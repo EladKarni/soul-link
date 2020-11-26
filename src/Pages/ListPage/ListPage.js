@@ -41,6 +41,15 @@ function ListPage() {
         }
 
         let isMatch = false;
+
+        if (!dataset.dead && trimmedValue === 'alive') {
+          isMatch = true;
+        }
+
+        if (dataset.dead && trimmedValue === 'dead') {
+          isMatch = true;
+        }
+
         dataset.pokemon.forEach(({
           name, types, nickname,
         }) => {
