@@ -1,70 +1,137 @@
-# Getting Started with Create React App
+<!--
+*** Thanks for checking out this README Template. If you have a suggestion that would
+*** make this better, please fork the repo and create a pull request or simply open
+*** an issue with the tag "enhancement".
+*** Thanks again! Now go create something AMAZING! :D
+***
+***
+***
+*** To avoid retyping too much info. Do a search and replace for the following:
+*** EladKarni, soul-link, twitter_handle, email
+-->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/EladKarni/soul-link">
+    <img src="https://github.com/EladKarni/soul-link/blob/master/Resources/logo512.png" alt="Logo" width="80" height="80">
+  </a>
 
-### `npm test`
+  <h3 align="center">Pokemon Soul Link</h3>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  <p align="center">
+    An app designed to help keep track of nuzlocke soul-link playthroughs in a user friendly manner  
+    <br />
+    <br />
+    <a href="https://pokemon-soul-link.web.app/">View Demo</a>
+    ·
+    <a href="https://github.com/EladKarni/soul-link/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/EladKarni/soul-link/issues">Request Feature</a>
+  </p>
+</p>
 
-### `npm run build`
+![image Screenshot](https://i.imgur.com/nSBT0lS.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Installation](#installation)
+* [Contributing](#contributing)
+* [License](#license)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This is a tool designed to help people keep track of their pokemon in a nuzlocke soul link challange. No login or signup is required, and if you don't already have a list, you can start a new with a simple click!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Current Features
+1.  Instant Syncing Between Users
+2.  Create New Links
+3.  Search Links
+4.  Distory Links
+5.  Easy URL Sharing of Lists
 
-## Learn More
+### Built With
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React](https://reactjs.org/)
+- [Create-React-App](https://github.com/facebook/create-react-app)
+- [React Router](https://reactrouter.com/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
+- [Firebase](https://firebase.google.com/)
+- [PokéAPI](https://pokeapi.co/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- GETTING STARTED -->
+## Getting Started
 
-### Code Splitting
+To get a local copy up and running, follow these steps.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Installation
 
-### Analyzing the Bundle Size
+1. Clone the repo
+```sh
+git clone https://github.com/EladKarni/soul-link.git
+```
+2. Install packages
+```sh
+yarn
+```
+3. Run local dev server
+```sh
+yarn start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<!-- CONTRIBUTING -->
+## Contributing
 
-### Making a Progressive Web App
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+<!-- LICENSE -->
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Distributed under the MIT License. See `LICENSE` for more information.
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/EladKarni/soul-link.svg?style=flat-square
+[contributors-url]: https://github.com/EladKarni/soul-link/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/EladKarni/soul-link.svg?style=flat-square
+[forks-url]: https://github.com/EladKarni/soul-link/network/members
+[stars-shield]: https://img.shields.io/github/stars/EladKarni/soul-link.svg?style=flat-square
+[stars-url]: https://github.com/EladKarni/soul-link/stargazers
+[issues-shield]: https://img.shields.io/github/issues/EladKarni/soul-link.svg?style=flat-square
+[issues-url]: https://github.com/EladKarni/soul-link/issues
+[license-shield]: https://img.shields.io/github/license/EladKarni/soul-link.svg?style=flat-square
+[license-url]: https://github.com/EladKarni/soul-link/blob/master/LICENSE.txt
