@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import firebase from '../../Config/Firebase';
 import createNewList from '../../Util/CreateNewList';
+import DoesListExist from '../../Util/doesListExist';
 import styles from './MenuPage.module.scss';
 
 function MenuPage() {
@@ -11,24 +11,22 @@ function MenuPage() {
   const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
+
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
     let newCode = sCode.toLowerCase();
-    const doesListExist = firebase.functions().httpsCallable('doesListExist');
     if (newCode.length > 0) {
       if (newCode.search(/sl-/) === 0) {
         newCode = sCode.slice(3);
       }
-      doesListExist(`${newCode}`).then((result) => {
-        if (!result.data) {
-          setLoading(false);
-          setErr('Please Check The Code');
-        } else {
-          setLoading(false);
-          history.push(`/SL-${newCode}`);
-        }
-      });
+      if (DoesListExist(newCode)) {
+        history.push(`/SL-${newCode}`);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setErr('Please Check The Code');
+      }
     } else {
       setLoading(false);
       setErr('Please add a code');
