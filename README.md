@@ -88,7 +88,27 @@ This is a tool designed to help people keep track of their pokemon in a nuzlocke
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running, follow these steps.
+To get a local copy up and running follow these simple example steps. instructions are written for `yarn` but npm works as well.
+
+### Prerequisites
+
+If you wish to work on the website, you'll need to make sure you have either `npm` or `yarn` installed.
+
+* yarn
+  ```sh
+  https://classic.yarnpkg.com/lang/en/docs/install
+  ```
+* npm
+  ```sh
+  https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+  ```
+
+You'll also need to install and setup `Firebase` if you plan on testing locally or deploying new cloud function code.
+
+* Firebase
+  ```sh
+  https://firebase.google.com/docs/functions/get-started#set-up-node.js-and-the-firebase-cli
+  ```
 
 ### Installation
 
@@ -104,7 +124,7 @@ yarn
 ```sh
 yarn start
 ```
-
+4. Make sure you change `template.env.local` to `.env.local` and add the required fields from your Firebase config file.
 <!-- CONTRIBUTING -->
 ## Contributing
 
