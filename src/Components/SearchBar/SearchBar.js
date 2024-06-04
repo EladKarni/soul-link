@@ -83,7 +83,7 @@ const SearchBar = ({
   useEffect(() => {
     const getPokemonAPI = async () => {
       const response = await fetch(
-        'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=1000',
+        'https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=2000',
       );
       const json = await response.json();
       setData(json.results);
