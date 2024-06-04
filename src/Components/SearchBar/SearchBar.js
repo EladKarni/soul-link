@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
-import PropTypes from 'prop-types';
-import firebase from '../../Config/Firebase';
-import styles from './SearchBar.module.scss';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import GetPokemonFromPokeAPI from '../../Util/PokeAPI';
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import { Typeahead } from "react-bootstrap-typeahead"; // ES2015
+import PropTypes from "prop-types";
+import firebase from "../../Config/Firebase";
+import styles from "./SearchBar.module.scss";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import GetPokemonFromPokeAPI from "../../Util/PokeAPI";
 
-const SearchBar = ({
-  listID, required, extraData, pokeIndex, closeModal,
-}) => {
+const SearchBar = ({ listID, required, extraData, pokeIndex, closeModal }) => {
   const typeaheadRef = React.useRef(null);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -17,18 +15,24 @@ const SearchBar = ({
   const handleSubmit = async () => {
     const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
-    firebase.firestore().collection('soul-list')
-      .doc(listID).collection('linked-poke-list')
-      .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
+    firebase
+      .firestore()
+      .collection("soul-list")
+      .doc(listID)
+      .collection("linked-poke-list")
+      .add({ title: "Click To Edit Title", pokemon: pokeInfo, id: "" })
       .then((docRef) => {
         const { id } = docRef;
-        firebase.firestore().collection('soul-list')
-          .doc(listID).collection('linked-poke-list')
+        firebase
+          .firestore()
+          .collection("soul-list")
+          .doc(listID)
+          .collection("linked-poke-list")
           .doc(id)
           .update({
             id,
           })
-          .then(() => 'Success')
+          .then(() => "Success")
           .catch((error) => error);
         setSelected([]);
       });
@@ -38,22 +42,25 @@ const SearchBar = ({
     const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
     let newPokeCard = [];
-    const oldPokemon = extraData.pokemon.filter((pokemon, index) => index !== pokeIndex)[0];
-    const newEvolution = { ...pokeInfo[0], nickname: extraData.pokemon[pokeIndex].nickname };
+    const oldPokemon = extraData.pokemon.filter(
+      (pokemon, index) => index !== pokeIndex
+    )[0];
+    const newEvolution = {
+      ...pokeInfo[0],
+      nickname: extraData.pokemon[pokeIndex].nickname,
+    };
 
     if (!pokeIndex) {
-      newPokeCard = [
-        newEvolution,
-        oldPokemon,
-      ];
+      newPokeCard = [newEvolution, oldPokemon];
     } else {
-      newPokeCard = [
-        oldPokemon,
-        newEvolution,
-      ];
+      newPokeCard = [oldPokemon, newEvolution];
     }
 
-    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+    firebase
+      .firestore()
+      .collection("soul-list")
+      .doc(listID)
+      .collection("linked-poke-list")
       .doc(extraData.id)
       .update({ pokemon: newPokeCard })
       .then(closeModal())
@@ -68,15 +75,15 @@ const SearchBar = ({
     onChange: (selectedPoke) => {
       handleChange(selectedPoke);
     },
-    id: 'autoComplete',
+    id: "autoComplete",
     clearButton: true,
-    labelKey: 'name',
+    labelKey: "name",
     multiple: true,
     minLength: 3,
-    bsSize: 'large',
+    bsSize: "large",
     ref: typeaheadRef,
-    placeholder: 'Choose Your Pokémon...',
-    style: { borderRadius: '10px 0 0 10px' },
+    placeholder: "Choose Your Pokémon...",
+    style: { borderRadius: "10px 0 0 10px" },
     options: data,
   };
 
