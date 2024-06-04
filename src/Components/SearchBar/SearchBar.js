@@ -17,13 +17,19 @@ const SearchBar = ({
   const handleSubmit = async () => {
     const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
-    firebase.firestore().collection('soul-list')
-      .doc(listID).collection('linked-poke-list')
+    firebase
+      .firestore()
+      .collection('soul-list')
+      .doc(listID)
+      .collection('linked-poke-list')
       .add({ title: 'Click To Edit Title', pokemon: pokeInfo, id: '' })
       .then((docRef) => {
         const { id } = docRef;
-        firebase.firestore().collection('soul-list')
-          .doc(listID).collection('linked-poke-list')
+        firebase
+          .firestore()
+          .collection('soul-list')
+          .doc(listID)
+          .collection('linked-poke-list')
           .doc(id)
           .update({
             id,
@@ -38,8 +44,13 @@ const SearchBar = ({
     const pokeInfo = await GetPokemonFromPokeAPI(selected);
 
     let newPokeCard = [];
-    const oldPokemon = extraData.pokemon.filter((pokemon, index) => index !== pokeIndex)[0];
-    const newEvolution = { ...pokeInfo[0], nickname: extraData.pokemon[pokeIndex].nickname };
+    const oldPokemon = extraData.pokemon.filter(
+      (pokemon, index) => index !== pokeIndex,
+    )[0];
+    const newEvolution = {
+      ...pokeInfo[0],
+      nickname: extraData.pokemon[pokeIndex].nickname,
+    };
 
     if (!pokeIndex) {
       newPokeCard = [
@@ -53,7 +64,11 @@ const SearchBar = ({
       ];
     }
 
-    firebase.firestore().collection('soul-list').doc(listID).collection('linked-poke-list')
+    firebase
+      .firestore()
+      .collection('soul-list')
+      .doc(listID)
+      .collection('linked-poke-list')
       .doc(extraData.id)
       .update({ pokemon: newPokeCard })
       .then(closeModal())
@@ -83,7 +98,7 @@ const SearchBar = ({
   useEffect(() => {
     const getPokemonAPI = async () => {
       const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=2000"
+        'https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=2000',
       );
       const json = await response.json();
       setData(json.results);
