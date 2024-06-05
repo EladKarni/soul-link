@@ -7,8 +7,8 @@ const config = {
   authDomain: process.env.REACT_APP_FIREBASE_AUTH,
   databaseURL: process.env.REACT_APP_FIREBASE_URL,
   projectId: process.env.REACT_APP_FIREBASE_ID,
-  storageBucket: '',
-  messagingSenderId: '',
+  storageBucket: "",
+  messagingSenderId: "",
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
