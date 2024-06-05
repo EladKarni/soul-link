@@ -32,6 +32,7 @@ const Editable = ({
   return (
     <section {...props}>
       {isEditing ? (
+        // eslint-disable-next-line jsx-a11y/control-has-associated-label
         <div
           role="textbox"
           tabIndex={0}
@@ -61,9 +62,7 @@ const Editable = ({
           className={dead ? styles.disabledLabel : styles.label}
           onClick={onLabelClicked}
         >
-          <span>
-            {text}
-          </span>
+          <span>{text}</span>
         </div>
       )}
     </section>
